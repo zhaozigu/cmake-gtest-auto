@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
   std::vector<int> integers;
-  for (auto i = 0; i < argc; i++)
+  for (auto i = 1; i < argc; i++)
   {
     integers.push_back(std::stoi(argv[i]));
   }
