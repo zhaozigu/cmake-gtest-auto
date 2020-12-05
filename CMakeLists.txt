@@ -9,8 +9,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-
 include_directories(src)
 add_subdirectory(src)
 
@@ -24,27 +22,8 @@ if (ENABLE_UNIT_TESTS)
   	GIT_REPOSITORY https://github.com/google/googletest.git
   	GIT_TAG release-1.10.0
 	)
-	FetchContent_GetProperties(googletest)
-
-	if(NOT googletest_POPULATED)
-  	FetchContent_Populate(googletest)
-		set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-		set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
-		# add the targets: gtest、gtest_main、gmock、gmock_main
-		add_subdirectory(
-			${googletest_SOURCE_DIR}
-			${googletest_BINARY_DIR}
-		)
-
-		if(MSVC)
-			foreach(_tgt gtest gtest_main gmock gmock_main)
-				target_compile_definitions(${_tgt}
-					PRIVATE
-						"_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING"
-        )
-    	endforeach()
-		endif()
-  endif()
+	
+	FetchContent_MakeAvailable(googletest)
 
 	add_executable(cpp_test "")
 	target_sources(cpp_test
